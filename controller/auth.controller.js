@@ -64,7 +64,7 @@ const loginCustomer = async (req, res) => {
   try {
     const customer = await Customer.findOne({ email: req.body.email });
     if (!customer) {
-      return res.status(401).status("Customer does not exist");
+      return res.status(401).json("Customer does not exist");
     }
     const matchPassword = await bcrypt.compare(
       req.body.password,
@@ -85,9 +85,8 @@ const loginCustomer = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     const admin = await Admin.findOne({ email: req.body.email });
-
-    if (admin === null) {
-      return res.status(401).status("Admin does not exist");
+    if (!admin) {
+      return res.status(401).json("Admin does not exist");
     }
     const matchPassword = await bcrypt.compare(
       req.body.password,
@@ -108,9 +107,8 @@ const loginAdmin = async (req, res) => {
 const loginVendor = async (req, res) => {
   try {
     const vendor = await Vendor.findOne({ email: req.body.email });
-    console.log(vendor);
     if (vendor === null) {
-      return res.status(401).status("Vendor does not exist");
+      return res.status(401).json("Vendor does not exist");
     }
     const matchPassword = await bcrypt.compare(
       req.body.password,
