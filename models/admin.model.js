@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const adminSchema = new mongoose.Schema({
+let adminSchemaObj = {
   fullName: {
     type: String,
     required: true,
@@ -15,7 +15,6 @@ const adminSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: Number,
-    required: true,
   },
   bio: {
     type: String,
@@ -34,6 +33,8 @@ const adminSchema = new mongoose.Schema({
     type: String,
     default: "admin",
   },
-});
+};
 
-module.exports = mongoose.model("Admins", adminSchema);
+const adminSchema = new mongoose.Schema(adminSchemaObj);
+
+module.exports = mongoose.model("Admin", adminSchema, "Admin");

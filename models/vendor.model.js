@@ -17,11 +17,10 @@ const vendorSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
   role: {
     type: String,
     default: "vendor",
   },
 });
 
-module.exports = mongoose.model("Vendors", vendorSchema);
+module.exports = mongoose.model("Vendor", vendorSchema, "Vendor");
