@@ -246,7 +246,15 @@ const scripthandle = async (req, res) => {
 const getOrders = async (req, res) => {
   // const orders = await Order.find({ productId: "6538c6bf33170bd4501ca4ca" });
   const shopId = "6538c6bf33170bd4501ca4c5";
-  const orders = await Product.find({ shopId: shopId }).populate("shopId");
+  const orders = await Order.find({
+    productId: {
+      $in: (
+        await Product.find({ shopId: shopId })
+      ).map((product) => product._id),
+    },
+  }).populate("productId");
+  console.log("product::::", orders);
+  res.status(200).json(orders);
   // match: { shopId: "6538dbd565147ac2850e7bc5" },
 
   // const orders = Order.aggregate([
@@ -273,8 +281,6 @@ const getOrders = async (req, res) => {
   //     },
   //   },
   // ]);
-  console.log(orders);
-  res.status(200).json(orders);
 };
 
 module.exports = {
