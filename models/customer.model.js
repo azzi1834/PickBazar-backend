@@ -22,7 +22,6 @@ const customerSchema = new mongoose.Schema(
     },
     contactNumber: {
       type: Number,
-      required: true,
     },
     address: [
       {

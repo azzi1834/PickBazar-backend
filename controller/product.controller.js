@@ -22,6 +22,7 @@ const createProduct = async (req, res) => {
         vendorId: vendor_id,
         categoryId: req.body.category_id,
         subcategoryId: req.body.subcategory_id,
+        shopId: req.body.shopId,
       };
 
       const product = new Product(productData);

@@ -15,7 +15,6 @@ const vendorSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: Number,
-    required: true,
   },
   role: {
     type: String,
