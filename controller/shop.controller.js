@@ -1,5 +1,7 @@
 const Shop = require("../models/shop.model");
 
+const Order = require("../models/order.model");
+
 const Vendor = require("../models/vendor.model");
 
 const createShop = async (req, res) => {
@@ -23,6 +25,21 @@ const createShop = async (req, res) => {
   }
 };
 
+//Get all orders of particular shop
+const getOrders = async (req, res) => {
+  const shopId = "6538c6bf33170bd4501ca4c5";
+  const orders = await Order.find({
+    productId: {
+      $in: (
+        await Product.find({ shopId: shopId })
+      ).map((product) => product._id),
+    },
+  }).populate("productId");
+  console.log("product::::", orders);
+  res.status(200).json(orders);
+};
+
 module.exports = {
   createShop,
+  getOrders,
 };

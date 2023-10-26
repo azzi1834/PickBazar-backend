@@ -244,8 +244,9 @@ const scripthandle = async (req, res) => {
 };
 
 const getOrders = async (req, res) => {
-  // const orders = await Order.find({ productId: "6538c6bf33170bd4501ca4ca" });
+  debugger;
   const shopId = "6538c6bf33170bd4501ca4c5";
+
   const orders = await Order.find({
     productId: {
       $in: (
@@ -253,34 +254,9 @@ const getOrders = async (req, res) => {
       ).map((product) => product._id),
     },
   }).populate("productId");
+
   console.log("product::::", orders);
   res.status(200).json(orders);
-  // match: { shopId: "6538dbd565147ac2850e7bc5" },
-
-  // const orders = Order.aggregate([
-  //   {
-  //     $lookup: {
-  //       from: "Products",
-  //       localField: "productId",
-  //       foreignField: "_id",
-  //       as: "Products",
-  //     },
-  //   },
-  //   {
-  //     $unwind: "$Products",
-  //   },
-  //   {
-  //     $match: {
-  //       "Products.shopId": shopId,
-  //     },
-  //   },
-  //   {
-  //     $group: {
-  //       _id: shopId,
-  //       orderCount: { $sum: 1 },
-  //     },
-  //   },
-  // ]);
 };
 
 module.exports = {

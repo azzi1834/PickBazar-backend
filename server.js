@@ -22,6 +22,7 @@ app.use("/admin/auth", adminRoutes);
 app.use("/vendor/auth", vendorRoutes);
 app.use("/customer/auth", customerRoutes);
 app.use("/script", scriptRoutes);
+
 app.use(authMiddleware);
 
 app.use("/customer", orderRoutes);
