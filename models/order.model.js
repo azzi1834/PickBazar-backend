@@ -44,11 +44,11 @@ const OrderSchema = new mongoose.Schema(
 
     OrderStatus: {
       type: String,
-      default: "Order Pending",
+      default: "Pending",
     },
     PaymentStatus: {
       type: String,
-      default: "Payment Pending",
+      default: "Pending",
     },
     OrderDate: {
       type: Date,

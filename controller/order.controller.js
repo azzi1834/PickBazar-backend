@@ -28,9 +28,9 @@ const addOrder = async (req, res) => {
 };
 
 const getAllOrders = async (req, res) => {
-  const orders = await Order.find({}).populate("customerId");
-
-  console.log("Orders :::", orders);
+  const orders = await Order.find({
+    customerId: "6538c6bf33170bd4501ca4cb",
+  }).populate("customerId");
 
   return res.status(200).json(orders);
 };
@@ -48,8 +48,23 @@ const updateOrderStatus = async (req, res) => {
   }
 };
 
+const customerOrders = async (req, res) => {
+  const customer_id = req?.user?.id;
+
+  const customerOrders = await Order.find({
+    customerId: "6538c6bf33170bd4501ca4cb",
+  }).sort({ OrderDate: -1 });
+  const product = await Product.find({
+    productId: customerOrders.productId,
+  });
+  console.log(product);
+
+  return res.status(200).json({ customer_id, customerOrders, product });
+};
+
 module.exports = {
   addOrder,
   getAllOrders,
   updateOrderStatus,
+  customerOrders,
 };
