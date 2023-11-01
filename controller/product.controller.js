@@ -41,7 +41,7 @@ const createProduct = async (req, res) => {
 };
 
 const getAllProducts = async (req, res) => {
-  const products = await Product.find({});
+  const products = await Product.find({ publishStatus: "Active" });
 
   res.status(200).json(products);
 };
