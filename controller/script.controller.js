@@ -6,6 +6,7 @@ const Customer = require("../models/customer.model");
 const Admin = require("../models/admin.model");
 const Shop = require("../models/shop.model");
 const Order = require("../models/order.model");
+const Dummy = require("../models/dummy.model");
 
 const jwtToken = require("../utils");
 
@@ -244,7 +245,6 @@ const scripthandle = async (req, res) => {
 };
 
 const getOrders = async (req, res) => {
-  debugger;
   const shopId = "6538c6bf33170bd4501ca4c5";
 
   const orders = await Order.find({
@@ -255,11 +255,73 @@ const getOrders = async (req, res) => {
     },
   }).populate("productId");
 
-  console.log("product::::", orders);
   res.status(200).json(orders);
+};
+
+const addData = async (req, res) => {
+  const items = [];
+
+  for (let i = 1; i <= 20; i++) {
+    const itemData = {
+      name: `Product${i}`,
+      price: i + 10,
+      color: "red",
+      size: "medium",
+    };
+
+    const responseData = await Dummy.create(itemData);
+
+    items.push(responseData);
+  }
+
+  return res.status(200).json(items);
+};
+
+const getDummyData = async (req, res) => {
+  const pageNumber = parseInt(req.query.page);
+
+  const pageSize = parseInt(req.query.pageSize);
+
+  const totalProducts = await Dummy.countDocuments();
+
+  let startIndex = pageNumber * pageSize;
+
+  let endIndex = (pageNumber + 1) * pageSize;
+
+  const result = {};
+
+  result.totalProducts = totalProducts;
+
+  if (startIndex > 0) {
+    result.previous = {
+      pageNumber: pageNumber - 1,
+      pageSize: pageSize,
+    };
+  }
+
+  if (endIndex < totalProducts) {
+    result.next = {
+      pageNumber: pageNumber + 1,
+      pageSize: pageSize,
+    };
+  }
+
+  result.data = await Dummy.find().skip(startIndex).limit(pageSize);
+
+  result.rowsPerPage = pageSize;
+
+  res.status(200).json(result);
+};
+
+const deleteData = async (req, res) => {
+  const result = await Dummy.deleteMany();
+  res.status(200).json("deleted");
 };
 
 module.exports = {
   scripthandle,
   getOrders,
+  addData,
+  getDummyData,
+  deleteData,
 };
