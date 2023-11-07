@@ -43,7 +43,6 @@ const updateOrderStatus = async (req, res) => {
   const findOrder = Order.findByIdAndUpdate(orderId, { OrderStatus: "status" });
 
   if (findOrder) {
-    console.log(findOrder);
     return res.status(200).json("Order Status Updated");
   }
 };

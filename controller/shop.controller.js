@@ -35,7 +35,6 @@ const getOrders = async (req, res) => {
       ).map((product) => product._id),
     },
   }).populate("productId");
-  console.log("product::::", orders);
   res.status(200).json(orders);
 };
 
