@@ -11,5 +11,6 @@ routes
   .post(scriptController.addData)
   .get(scriptController.getDummyData)
   .delete(scriptController.deleteData);
+routes.route("/itemsQuantity").get(scriptController.fetchDataQuantity);
 
 module.exports = routes;

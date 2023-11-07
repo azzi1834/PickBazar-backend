@@ -280,7 +280,7 @@ const addData = async (req, res) => {
 const getDummyData = async (req, res) => {
   const pageNumber = parseInt(req.query.page);
 
-  const pageSize = parseInt(req.query.pageSize);
+  const pageSize = parseInt(req.query.size);
 
   const totalProducts = await Dummy.countDocuments();
 
@@ -310,7 +310,14 @@ const getDummyData = async (req, res) => {
 
   result.rowsPerPage = pageSize;
 
+  console.log(pageNumber, pageSize);
+
   res.status(200).json(result);
+};
+
+const fetchDataQuantity = async (req, res) => {
+  const quantity = await Dummy.countDocuments();
+  return res.status(200).json({ quantity: quantity });
 };
 
 const deleteData = async (req, res) => {
@@ -324,4 +331,5 @@ module.exports = {
   addData,
   getDummyData,
   deleteData,
+  fetchDataQuantity,
 };
